@@ -5,7 +5,7 @@ module.exports = function count(s, pairs) {
         if(pairs[i][1] > 10)
             return 0;
         N *= Math.pow(pairs[i][0], pairs[i][1]);
-        if(N > 100000)
+        if(N > 1500000)
             return 0;
     }
 
