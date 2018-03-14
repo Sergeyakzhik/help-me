@@ -2,44 +2,35 @@ module.exports = function count(s, pairs) {
     var N = 1;
 
     for(let i = 0; i < pairs.length; i++) {
-        if(pairs[i][1] > 10)
+        if(pairs[i][1] > 50)
             return 0;
         N *= Math.pow(pairs[i][0], pairs[i][1]);
-        if(N > 1500000)
+        if(N > 10000000)
             return 0;
     }
 
-    var arr = [];
+    var a = 0;
 
-    for(let i = 0; i < N; i++){
-        arr[i] = i;
+    for(let i = 0; i < N; i++) {
+        a += check(i, s, N);
     }
 
-    for(let j = 0; j < s.length; j++){
-
-        var b = check(j, s, N, arr);
-        arr.splice(0, arr.length);
-        arr = b;
-    }
-
-    return arr.length % 1000000007;
+    return a % 1000000007;
 }
 
-
-function check (j, s, N, arr) {
-    var a = [];
-    for(let i = 0; i < arr.length; i++) {
-        if ((findGCD(arr[i] + j, N) != 1 && s[j] == 0) || (findGCD(arr[i] + j, N) == 1 && s[j] == 1)) {
-            a.push(arr[i]);
+function check (i, s, N) {
+    for(let j = 0; j < s.length; j++) {
+        var gcd = findGCD(i + j, N);
+        if (!(gcd != 1 && s[j] == 0) && !(gcd == 1 && s[j] == 1)) {
+            return 0;
         }
     }
-    return a;
+    return 1;
 }
 
 function findGCD (a, b) {
     if (!b) {
         return a;
     }
-
     return findGCD(b, a % b);
 }
